@@ -1,3 +1,10 @@
+/**
+*- Telegram交流群：https://t.me/AM_CLUBS
+*- YouTube频道：https://youtube.com/@AM_CLUB
+*- VLESS订阅地址：https://worker.amcloud.filegear-sg.me/866853eb-5293-4f09-bf00-e13eb237c655
+*- Github仓库地址：https://github.com/ansoncloud8
+**/
+
 // @ts-ignore
 import { connect } from 'cloudflare:sockets';
 
@@ -24,15 +31,19 @@ let addressesapi = [
 
 // 设置优选地址，不带端口号默认443，TLS订阅生成
 let addresses = [
-	// 'icook.tw:2053#官方优选域名',
-	// 'cloudflare.cfgo.cc#优选官方线路',
+	'icook.tw:443#t.me/AM_CLUBS',//官方优选域名
+	//'cloudflare.cfgo.cc:443#关注YouTube频道@AM_CLUB',
+	'visa.com:443#youtube.com/@AM_CLUB'
 ];
 
 let autoaddress = [
-	'visa.com'//官方优选域名
+	'icook.tw:443',
+	'cloudflare.cfgo.cc:443',
+	'visa.com:443'
 ];
 
 let FileName = 'ansoncloud8.github.io';
+let tagName = 'youtube.com/@am_club'
 let SUBUpdateTime = 6;
 let total = 99;//PB
 //let timestamp = now;
@@ -45,7 +56,7 @@ let fakeHostName = generateRandomString();
 
 let sub = 'worker.amcloud.filegear-sg.me';// 内置优选订阅生成器，可自行搭建
 let subconverter = 'url.v1.mk';// clash订阅转换后端，目前使用肥羊的订阅转换功能。自带虚假uuid和host订阅。
-let subconfig = "https://raw.githubusercontent.com/ansoncloud88/ACL4SSR/main/Clash/config/ACL4SSR_Online_Full_MultiMode.ini"; //订阅配置文件
+let subconfig = "https://raw.githubusercontent.com/ansoncloud8/ACL4SSR/main/Clash/config/ACL4SSR_Online_Full_MultiMode.ini"; //订阅配置文件
 
 
 if (!isValidUUID(userID)) {
@@ -139,9 +150,10 @@ export default {
 						//拿随机
 						fakeUserID = uuid;
 						fakeHostName = url.searchParams.get('host') ? url.searchParams.get('host').toLowerCase() : request.headers.get('Host');
-						const vlessSubConfig = createVlessBestIpSub(fakeUserID, fakeHostName, newAddressesapi, 'format');
+						const format = url.searchParams.get('format') ? url.searchParams.get('format').toLowerCase() : "null";
+						const vlessSubConfig = createVlessBestIpSub(fakeUserID, fakeHostName, newAddressesapi, format);
 						const btoa_not = url.searchParams.get('btoa') ? url.searchParams.get('btoa').toLowerCase() : null;
-
+						
 					    if (btoa_not === 'btoa') {
 							return new Response(vlessSubConfig, {
 								status: 200,
@@ -958,7 +970,18 @@ function getVLESSConfig(userIDs, hostName) {
 	const output = userIDArray.map((userID) => {
 		const vlessMain = 'vless://' + userID + '@' + hostName + commonUrlPart;
 		const vlessSec = 'vless://' + userID + '@' + proxyIP + commonUrlPart;
-		return `v2ray default ip
+		return `################################################################
+telegram 交流群 技术大佬~在线交流!
+t.me/AM_CLUBS
+---------------------------------------------------------------
+github 项目地址 点击Star!Star!Star!!!
+https://github.com/ansoncloud8/am-tunnel
+---------------------------------------------------------------
+订阅YouTube频道,更多技术分享
+https://youtube.com/@AM_CLUB
+################################################################
+
+v2ray default ip
 ---------------------------------------------------------------
 ${vlessMain}
 <button onclick='copyToClipboard("${vlessMain}")'><i class="fa fa-clipboard"></i> Copy vlessMain</button>
@@ -1002,15 +1025,14 @@ clash-meta
 <b style='font-size: 15px;'>欢迎！这是生成 VLESS 协议的配置。如果您发现这个项目很好用，请查看我们的 GitHub 项目给我一个star：</b>
 <a href='https://github.com/ansoncloud8/am-tunnel' target='_blank'>am-tunnel</a>
 <iframe src='https://ghbtns.com/github-btn.html?user=ansoncloud8&repo=am-tunnel&type=star&count=true&size=large' frameborder='0' scrolling='0' width='170' height='30' title='GitHub'></iframe>
-<a href='//${hostName}/sub/${userIDArray[0]}' target='_blank'>VLESS 节点订阅连接</a> <button onclick='copyToClipboard("${sublink}")'><i class="fa fa-clipboard"></i> Copy</button>
-<a href='${subbestip}' target='_blank'>VLESS 优选IP自动节点订阅</a> <button onclick='copyToClipboard("${subbestip}")'><i class="fa fa-clipboard"></i> Copy</button>
-<a href='clash://install-config?url=${encodeURIComponent(`https://${hostName}/sub/${userIDArray[0]}?format=clash`)}}' target='_blank'>Clash for Windows 节点订阅连接</a> <button onclick='copyToClipboard("${clashlink}")'><i class="fa fa-clipboard"></i> Copy</button>
-<a href='${sublink}?format=clash' target='_blank'>Clash 节点订阅连接</a> <button onclick='copyToClipboard("${sublink}?format=clash")'><i class="fa fa-clipboard"></i> Copy</button>
-<a href='clash://install-config?url=${encodeURIComponent(subbestip)}' target='_blank'>Clash优选IP自动</a> <button onclick='copyToClipboard("${clashlink}")'><i class="fa fa-clipboard"></i> Copy</button>
-<a href='sing-box://import-remote-profile?url=${encodeURIComponent(subbestip)}' target='_blank'>singbox优选IP自动</a> <button onclick='copyToClipboard("${singboxlink}")'><i class="fa fa-clipboard"></i> Copy</button>
-<a href='${quantumultxlink}' target='_blank'>Quantumult X优选IP自动</a> <button onclick='copyToClipboard("${quantumultxlink}")'><i class="fa fa-clipboard"></i> Copy</button>
-<a href='sn://subscription?url=${encodeURIComponent(subbestip)}' target='_blank'>nekobox优选IP自动</a>
-<a href='${subbestip}&btoa=btoa' target='_blank'>v2rayN优选IP自动</a><button onclick='copyToClipboard("${subbestip}&btoa=btoa")'><i class="fa fa-clipboard"></i> Copy</button></p>`;
+<a href='//${hostName}/sub/${userIDArray[0]}' target='_blank'>VLESS节点订阅连接(v2rayU、v2rayN等工具)自动生成</a> <button onclick='copyToClipboard("${sublink}")'><i class="fa fa-clipboard"></i> Copy</button>
+<a href='${subbestip}' target='_blank'>VLESS节点订阅连接(v2rayU、v2rayN等工具)优选IP</a> <button onclick='copyToClipboard("${subbestip}")'><i class="fa fa-clipboard"></i> Copy</button>
+<a href='clash://install-config?url=${encodeURIComponent(`https://${hostName}/sub/${userIDArray[0]}?format=clash`)}}' target='_blank'>Clash节点订阅连接(clash-verge-rev、openclash等工具)自动生成</a> <button onclick='copyToClipboard("${clashlink}")'><i class="fa fa-clipboard"></i> Copy</button>
+<a href='clash://install-config?url=${encodeURIComponent(subbestip)}' target='_blank'>Clash节点订阅连接(clash-verge-rev、openclash等工具)优选IP</a> <button onclick='copyToClipboard("${clashlink}")'><i class="fa fa-clipboard"></i> Copy</button>
+<a href='sing-box://import-remote-profile?url=${encodeURIComponent(subbestip)}' target='_blank'>(sin-box工具)节点订阅连接优选IP</a> <button onclick='copyToClipboard("${singboxlink}")'><i class="fa fa-clipboard"></i> Copy</button>
+<a href='${quantumultxlink}' target='_blank'>(Quantumult X工具)节点订阅连接优选IP</a> <button onclick='copyToClipboard("${quantumultxlink}")'><i class="fa fa-clipboard"></i> Copy</button>
+<a href='sn://subscription?url=${encodeURIComponent(subbestip)}' target='_blank'>nekobox节点订阅连接优选IP</a>
+</p>`;
 	// HTML Head with CSS and FontAwesome library
 	const htmlHead = `
   <head>
@@ -1093,6 +1115,10 @@ function createVLESSSub(userID_Path, hostName, format, dq) {
 	const userIDArray = userID_Path.includes(',') ? userID_Path.split(',') : [userID_Path];
 	const commonUrlPart_http = `?encryption=none&security=none&fp=random&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#`;
 	const commonUrlPart_https = `?encryption=none&security=tls&sni=${hostName}&fp=random&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#`;
+	//trojan
+	const trojan_http = `?alpn=http%2F1.1&security=none&fp=random&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#`;
+	const trojan_https = `?alpn=http%2F1.1&security=tls&sni=${hostName}&fp=random&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#`;
+//const trojanLink = `trojan://${密码}@${address}:${port}?security=tls&sni=${sni}&alpn=http%2F1.1&fp=randomized&type=ws&host=${伪装域名}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + 节点备注)}`;
 
 	const output = userIDArray.flatMap((userID) => {
 		if (format === 'qx') {
@@ -1128,15 +1154,15 @@ function createVLESSSub(userID_Path, hostName, format, dq) {
 				const cfHttps = 'vless=cf.' + port + '.' + host + ':' + port + ',method=none,password=' + userID + ',obfs=wss,obfs-uri=/?ed=2048,obfs-host=' + hostName + ',tls-verification=true,tls-host=' + hostName + ',fast-open=false,udp-relay=false,tag=📶 CF_' + port;
 				return [sgHttps, hkHttps, krHttps, jpHttps, usHttps, twHttps, cfHttps];
 			});
-
+			
 			return [...httpsConfigurations];
-		} else {
+		} else if (format === 'trojan') {
 			const httpConfigurations = Array.from(portSet_http).flatMap((port) => {
 				if (!hostName.includes('pages.dev')) {
-					const urlPart = `${hostName}-HTTP-${port}`;
-					const vlessMainHttp = 'vless://' + userID + '@' + hostName + ':' + port + commonUrlPart_http + urlPart;
+					const urlPart = tagName + ` (${hostName}-HTTP-${port})`;
+					const vlessMainHttp = 'trojan://' + userID + '@' + hostName + ':' + port + trojan_http + urlPart;
 					return autoaddress.flatMap((proxyIP) => {
-						const vlessSecHttp = 'vless://' + userID + '@' + proxyIP + ':' + port + commonUrlPart_http + urlPart + '-' + proxyIP + '-tunnel';
+						const vlessSecHttp = 'trojan://' + userID + '@' + proxyIP + ':' + port + trojan_https + urlPart + '-' + proxyIP;
 						return [vlessMainHttp, vlessSecHttp];
 					});
 				}
@@ -1144,10 +1170,34 @@ function createVLESSSub(userID_Path, hostName, format, dq) {
 			});
 
 			const httpsConfigurations = Array.from(portSet_https).flatMap((port) => {
-				const urlPart = `${hostName}-HTTPS-${port}`;
+				const urlPart = tagName + ` (${hostName}-HTTPS-${port})`;
+				const vlessMainHttps = 'trojan://' + userID + '@' + hostName + ':' + port + trojan_http + urlPart;
+				return autoaddress.flatMap((proxyIP) => {
+					const vlessSecHttps = 'trojan://' + userID + '@' + proxyIP + ':' + port + trojan_https + urlPart + '-' + proxyIP;
+					return [vlessMainHttps, vlessSecHttps];
+				});
+			});
+
+			return [...httpConfigurations, ...httpsConfigurations];
+			
+		}else {
+			const httpConfigurations = Array.from(portSet_http).flatMap((port) => {
+				if (!hostName.includes('pages.dev')) {
+					const urlPart = tagName + ` (${hostName}-HTTP-${port})`;
+					const vlessMainHttp = 'vless://' + userID + '@' + hostName + ':' + port + commonUrlPart_http + urlPart;
+					return autoaddress.flatMap((proxyIP) => {
+						const vlessSecHttp = 'vless://' + userID + '@' + proxyIP + ':' + port + commonUrlPart_http + urlPart + '-' + proxyIP;
+						return [vlessMainHttp, vlessSecHttp];
+					});
+				}
+				return [];
+			});
+
+			const httpsConfigurations = Array.from(portSet_https).flatMap((port) => {
+				const urlPart = tagName + ` (${hostName}-HTTPS-${port})`;
 				const vlessMainHttps = 'vless://' + userID + '@' + hostName + ':' + port + commonUrlPart_https + urlPart;
 				return autoaddress.flatMap((proxyIP) => {
-					const vlessSecHttps = 'vless://' + userID + '@' + proxyIP + ':' + port + commonUrlPart_https + urlPart + '-' + proxyIP + '-tunnel';
+					const vlessSecHttps = 'vless://' + userID + '@' + proxyIP + ':' + port + commonUrlPart_https + urlPart + '-' + proxyIP;
 					return [vlessMainHttps, vlessSecHttps];
 				});
 			});
@@ -1168,6 +1218,7 @@ function createVlessBestIpSub(userID_Path, hostName, newAddressesapi, format) {
 	const responseBody = uniqueAddresses.map((address, i) => {
 		let port = "443";
 		let addressid = address;
+		let dq = tagName;
 
 		const match = addressid.match(regex);
 		if (!match) {
@@ -1195,8 +1246,12 @@ function createVlessBestIpSub(userID_Path, hostName, newAddressesapi, format) {
 			port = match[2] || port;
 			addressid = match[3] || address;
 		}
+		dq = addressid + '_' + i;
 		//🇸🇬 SG：新加坡 🇭🇰 HK：香港 🇰🇷 KR：韩国 🇯🇵 JP：日本 🇬🇧 GB：英国 🇺🇸 US：美国 🇼🇸 TW：台湾
-		if (addressid === 'SG') {
+		if (addressid.includes('AM')) {
+			addressid = addressid;
+			dq = addressid;
+		} else if (addressid === 'SG') {
 			addressid = '🇸🇬 SG_' + i;
 		} else if (addressid === 'HK') {
 			addressid = '🇭🇰 HK_' + i;
@@ -1210,13 +1265,16 @@ function createVlessBestIpSub(userID_Path, hostName, newAddressesapi, format) {
 			addressid = '🇺🇸 US_' + i;
 		} else if (addressid === 'TW') {
 			addressid = '🇼🇸 TW_' + i;
+		} else if (addressid === 'CF') {
+			addressid = '📶 ' + addressid + '_' + i;
 		} else {
 			addressid = '📶 ' + addressid + '_' + i;
+			dq = tagName+ '_' + i;
 		}
 		
-		let vlessLink = `vless://${userID_Path}@${address}:${port}?encryption=none&security=tls&sni=${hostName}&fp=random&type=ws&host=${hostName}&path=&path=%2F%3Fed%3D2048#${hostName}`;
+		let vlessLink = `vless://${userID_Path}@${address}:${port}?encryption=none&security=tls&sni=${hostName}&fp=random&type=ws&host=${hostName}&path=&path=%2F%3Fed%3D2048#${dq}`;
 		if (port === '80' || port === '8080' || port === '8880' || port === '2052' || port === '2086' || port === '2095' || port === '2082' ) {
-			vlessLink = `vless://${userID_Path}@${address}:${port}?encryption=none&security=&fp=random&type=ws&host=${hostName}&path=&path=%2F%3Fed%3D2048#${hostName}`;
+			vlessLink = `vless://${userID_Path}@${address}:${port}?encryption=none&security=&fp=random&type=ws&host=${hostName}&path=&path=%2F%3Fed%3D2048#${dq}`;
 		}
 		
 		if (format === 'qx') {
@@ -1228,6 +1286,15 @@ function createVlessBestIpSub(userID_Path, hostName, newAddressesapi, format) {
 				vlessLink = `vless=${address}:${port},method=none,password=${userID_Path},obfs=wss,obfs-uri=/?ed=2048,obfs-host=${hostName},tls-verification=true,tls-host=${hostName},fast-open=false,udp-relay=false,tag=${addressid}`;
 			}
 		}
+		//trojan
+		if (format === 'trojan') {
+			if (port === '80' || port === '8080' || port === '8880' || port === '2052' || port === '2086' || port === '2095' || port === '2082' ) {
+				vlessLink = `trojan://${userID_Path}@${address}:${port}?alpn=http%2F1.1&security=tls&sni=${hostName}&fp=random&type=ws&host=${hostName}&path=&path=%2F%3Fed%3D2048#${dq}`;
+			}else{
+				vlessLink = `trojan://${userID_Path}@${address}:${port}?alpn=http%2F1.1&security=&fp=random&type=ws&host=${hostName}&path=&path=%2F%3Fed%3D2048#${dq}`;
+			}
+		}
+		
 
 		return vlessLink;
 	}).join('\n');
@@ -1265,4 +1332,3 @@ async function nginx() {
 	`
 	return text;
 }
-
